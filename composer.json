@@ -1,7 +1,7 @@
 {
   "name": "gvinston/minio_bitrix",
   "homepage": "https://www.instagram.com/igvinston/",
-  "description": "Service minio s3 for bitrix",
+  "description": "Service minio s3 for bitrix.",
   "license": "proprietary",
   "type": "library",
   "minimum-stability": "stable",
