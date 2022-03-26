@@ -2,14 +2,13 @@
 
 namespace Gvinston\Storage;
 
-use \Gvinston\Storage\CCloudStorageService;
 use \Aws\S3\S3Client;
 use \GuzzleHttp\Exception\ClientException;
 use \GuzzleHttp\Exception\ConnectException;
 use \Monolog\Handler\StreamHandler;
 use \Monolog\Logger;
 
-class CCloudStorageServiceMinio extends CCloudStorageService
+class CCloudStorageServiceMinio extends \CCloudStorageService
 {
     private int $connect_timeout = 5;
 
