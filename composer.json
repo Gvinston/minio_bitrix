@@ -19,9 +19,15 @@
   ],
   "require": {
     "php": ">=7.4",
-    "aws/aws-sdk-php": "^3.215"
+    "aws/aws-sdk-php": "^3.215",
+    "monolog/monolog": "^2.2"
   },
   "autoload": {
     "classmap": "src"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0"
+    }
   }
 }
