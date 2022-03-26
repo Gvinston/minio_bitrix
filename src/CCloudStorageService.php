@@ -1,4 +1,7 @@
 <?php
+
+namespace Gvinston\Storage;
+
 abstract class CCloudStorageService
 {
 	protected $verb = '';

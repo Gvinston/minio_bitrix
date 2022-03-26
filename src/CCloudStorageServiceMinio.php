@@ -2,7 +2,7 @@
 
 namespace Gvinston\Storage;
 
-use \CCloudStorageService;
+use \Gvinston\Storage\CCloudStorageService;
 use \Aws\S3\S3Client;
 use \GuzzleHttp\Exception\ClientException;
 use \GuzzleHttp\Exception\ConnectException;
