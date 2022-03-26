@@ -1,0 +1,18 @@
+{
+  "name": "gvinston/minio_bitrix",
+  "description": "Service minio s3 for bitrix",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "vladimir",
+      "email": "chebukin.v.n@yandex.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "aws/aws-sdk-php": "^3.215"
+  },
+  "autoload": {
+    "classmap": "src"
+  }
+}
