@@ -4,7 +4,7 @@
   "description": "Service minio s3 for bitrix",
   "license": "proprietary",
   "type": "library",
-  "minimum-stability": "dev-master",
+  "minimum-stability": "dev",
   "keywords": [
     "minio",
     "minios3",

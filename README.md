@@ -4,13 +4,14 @@
 php >= 7.4
 
 Для подключения в init.php вставьте:
-
-$eventManager = \Bitrix\Main\EventManage::getInstance();
-
-$eventManager->addEventHandler(
-'clouds',
-'OnGetStorageService', [
-'\Gvinston\Storage\CCloudStorageServiceMinio',
-'GetObjectInstance',
-]
-);
+<pre>
+    $eventManager = \Bitrix\Main\EventManage::getInstance();
+    
+    $eventManager->addEventHandler(
+    'clouds',
+    'OnGetStorageService', [
+    '\Gvinston\Storage\CCloudStorageServiceMinio',
+    'GetObjectInstance',
+    ]
+    );
+</pre>
