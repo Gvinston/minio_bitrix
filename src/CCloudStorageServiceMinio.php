@@ -355,7 +355,8 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     public function SaveFile($arBucket, $filePath, $arFile)
     {
         try {
-            if (!empty(self::$fileKeyForUpload)) {
+            if (!empty(self::$fileKeyForUpload) &&
+                stripos($filePath, '/resize_cache/') === false) {
                 if (stripos($arFile['name'], self::$fileKeyForUpload) === false) {
                     return false;
                 }
