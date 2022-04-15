@@ -10,7 +10,7 @@ use \Monolog\Logger;
 
 class CCloudStorageServiceMinio extends \CCloudStorageService
 {
-    private int $connect_timeout = 5;
+    private int $connectTimeout = 5;
 
     private int $timeout = 10;
 
@@ -90,41 +90,41 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @param $bServiceSet
-     * @param $cur_SERVICE_ID
+     * @param $curServiceId
      * @param $bVarsFromForm
      * @return string
      */
-    public function GetSettingsHTML($arBucket, $bServiceSet, $cur_SERVICE_ID, $bVarsFromForm)
+    public function GetSettingsHTML($bucket, $bServiceSet, $curServiceId, $bVarsFromForm)
     {
         if ($bVarsFromForm)
-            $arSettings = $_POST["SETTINGS"][$this->GetID()];
+            $settings = $_POST["SETTINGS"][$this->GetID()];
         else
-            $arSettings = unserialize($arBucket["SETTINGS"]);
+            $settings = unserialize($bucket["SETTINGS"]);
 
-        if (!is_array($arSettings)) {
-            $arSettings = array(
+        if (!is_array($settings)) {
+            $settings = array(
                 "HOST" => "",
                 "ACCESS_KEY" => "",
                 "SECRET_KEY" => "",
             );
         }
 
-        $htmlID = htmlspecialcharsbx($this->GetID());
+        $htmlId = htmlspecialcharsbx($this->GetID());
 
         $result = '
-		<tr id="SETTINGS_0_' . $htmlID . '" style="display:' . ($cur_SERVICE_ID === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
+		<tr id="SETTINGS_0_' . $htmlId . '" style="display:' . ($curServiceId === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
 			<td>' . GetMessage("CLO_STORAGE_S3_EDIT_HOST") . ':</td>
-			<td><input type="hidden" name="SETTINGS[' . $htmlID . '][HOST]" id="' . $htmlID . 'HOST" value="' . htmlspecialcharsbx($arSettings['HOST']) . '"><input type="text" size="55" name="' . $htmlID . 'INP_HOST" id="' . $htmlID . 'INP_HOST" value="' . htmlspecialcharsbx($arSettings['HOST']) . '" onchange="BX(\'' . $htmlID . 'HOST\').value = this.value"></td>
+			<td><input type="hidden" name="SETTINGS[' . $htmlId . '][HOST]" id="' . $htmlId . 'HOST" value="' . htmlspecialcharsbx($settings['HOST']) . '"><input type="text" size="55" name="' . $htmlId . 'INP_HOST" id="' . $htmlId . 'INP_HOST" value="' . htmlspecialcharsbx($settings['HOST']) . '" onchange="BX(\'' . $htmlId . 'HOST\').value = this.value"></td>
 		</tr>
-		<tr id="SETTINGS_1_' . $htmlID . '" style="display:' . ($cur_SERVICE_ID === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
+		<tr id="SETTINGS_1_' . $htmlId . '" style="display:' . ($curServiceId === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
 			<td>' . GetMessage("CLO_STORAGE_S3_EDIT_ACCESS_KEY") . ':</td>
-			<td><input type="hidden" name="SETTINGS[' . $htmlID . '][ACCESS_KEY]" id="' . $htmlID . 'ACCESS_KEY" value="' . htmlspecialcharsbx($arSettings['ACCESS_KEY']) . '"><input type="text" size="55" name="' . $htmlID . 'INP_ACCESS_KEY" id="' . $htmlID . 'INP_ACCESS_KEY" value="' . htmlspecialcharsbx($arSettings['ACCESS_KEY']) . '" onchange="BX(\'' . $htmlID . 'ACCESS_KEY\').value = this.value"></td>
+			<td><input type="hidden" name="SETTINGS[' . $htmlId . '][ACCESS_KEY]" id="' . $htmlId . 'ACCESS_KEY" value="' . htmlspecialcharsbx($settings['ACCESS_KEY']) . '"><input type="text" size="55" name="' . $htmlId . 'INP_ACCESS_KEY" id="' . $htmlId . 'INP_ACCESS_KEY" value="' . htmlspecialcharsbx($settings['ACCESS_KEY']) . '" onchange="BX(\'' . $htmlId . 'ACCESS_KEY\').value = this.value"></td>
 		</tr>
-		<tr id="SETTINGS_2_' . $htmlID . '" style="display:' . ($cur_SERVICE_ID === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
+		<tr id="SETTINGS_2_' . $htmlId . '" style="display:' . ($curServiceId === $this->GetID() || !$bServiceSet ? '' : 'none') . '" class="settings-tr adm-detail-required-field">
 			<td>' . GetMessage("CLO_STORAGE_S3_EDIT_SECRET_KEY") . ':</td>
-			<td><input type="hidden" name="SETTINGS[' . $htmlID . '][SECRET_KEY]" id="' . $htmlID . 'SECRET_KEY" value="' . htmlspecialcharsbx($arSettings['SECRET_KEY']) . '"><input type="text" size="55" name="' . $htmlID . 'INP_SECRET_KEY" id="' . $htmlID . 'INP_SECRET_KEY" value="' . htmlspecialcharsbx($arSettings['SECRET_KEY']) . '" autocomplete="off" onchange="BX(\'' . $htmlID . 'SECRET_KEY\').value = this.value"></td>
+			<td><input type="hidden" name="SETTINGS[' . $htmlId . '][SECRET_KEY]" id="' . $htmlId . 'SECRET_KEY" value="' . htmlspecialcharsbx($settings['SECRET_KEY']) . '"><input type="text" size="55" name="' . $htmlId . 'INP_SECRET_KEY" id="' . $htmlId . 'INP_SECRET_KEY" value="' . htmlspecialcharsbx($settings['SECRET_KEY']) . '" autocomplete="off" onchange="BX(\'' . $htmlId . 'SECRET_KEY\').value = this.value"></td>
 		</tr>
 
 		';
@@ -132,20 +132,20 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
-     * @param $arSettings
+     * @param $bucket
+     * @param $settings
      * @return bool
      */
-    public function CheckSettings($arBucket, &$arSettings)
+    public function CheckSettings($bucket, &$settings)
     {
         global $APPLICATION;
         $aMsg =/*.(array[int][string]string).*/
             array();
 
         $result = array(
-            "HOST" => is_array($arSettings) ? trim($arSettings["HOST"]) : '',
-            "ACCESS_KEY" => is_array($arSettings) ? trim($arSettings["ACCESS_KEY"]) : '',
-            "SECRET_KEY" => is_array($arSettings) ? trim($arSettings["SECRET_KEY"]) : '',
+            "HOST" => is_array($settings) ? trim($settings["HOST"]) : '',
+            "ACCESS_KEY" => is_array($settings) ? trim($settings["ACCESS_KEY"]) : '',
+            "SECRET_KEY" => is_array($settings) ? trim($settings["SECRET_KEY"]) : '',
         );
 
         if ($result["HOST"] === '') {
@@ -174,31 +174,31 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
             $APPLICATION->ThrowException($e);
             return false;
         } else {
-            $arSettings = $result;
+            $settings = $result;
         }
 
         return true;
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @return bool
      */
-    public function CreateBucket($arBucket)
+    public function CreateBucket($bucket)
     {
         try {
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
             $s3->createBucket([
-                'Bucket' => $arBucket['BUCKET'],
+                'Bucket' => $bucket['BUCKET'],
             ]);
 
             $s3->putBucketPolicy([
-                'Bucket' => $arBucket['BUCKET'],
-                'Policy' => sprintf($this->policy, $arBucket['BUCKET'], $arBucket['BUCKET']),
+                'Bucket' => $bucket['BUCKET'],
+                'Policy' => sprintf($this->policy, $bucket['BUCKET'], $bucket['BUCKET']),
             ]);
 
-            return $s3->doesBucketExist($arBucket['BUCKET']);
+            return $s3->doesBucketExist($bucket['BUCKET']);
 
         } catch (\Exception $e) {
             return false;
@@ -206,17 +206,17 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @return bool
      */
-    public function DeleteBucket($arBucket)
+    public function DeleteBucket($bucket)
     {
         try {
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
-            $s3->deleteBucket(['Bucket' => $arBucket['BUCKET']]);
+            $s3->deleteBucket(['Bucket' => $bucket['BUCKET']]);
 
-            return !$s3->doesBucketExist($arBucket['BUCKET']);
+            return !$s3->doesBucketExist($bucket['BUCKET']);
 
         } catch (\Exception $e) {
             return false;
@@ -224,16 +224,16 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @return bool
      */
-    public function IsEmptyBucket($arBucket)
+    public function IsEmptyBucket($bucket)
     {
         try {
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
             $iterator = $s3->getIterator('ListObjects', [
-                'Bucket' => $arBucket['BUCKET'],
+                'Bucket' => $bucket['BUCKET'],
             ]);
 
             $count = iterator_count($iterator);
@@ -246,22 +246,22 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
-     * @param $arFile
+     * @param $bucket
+     * @param $file
      * @return string
      */
-    public function GetFileSRC($arBucket, $arFile)
+    public function GetFileSRC($bucket, $file)
     {
         try {
-            if (empty($arFile)) {
+            if (empty($file)) {
                 return '';
             }
 
-            if ($this->FileExists($arBucket, $arFile)) {
-                $key = $this->getKey($arFile);
-                $s3 = $this->getS3Client($arBucket);
+            if ($this->FileExists($bucket, $file)) {
+                $key = $this->getKey($file);
+                $s3 = $this->getS3Client($bucket);
 
-                return $s3->getObjectUrl($arBucket['BUCKET'], $key);
+                return $s3->getObjectUrl($bucket['BUCKET'], $key);
             }
         } catch (\Exception $e) {
             return '';
@@ -269,11 +269,11 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @param $filePath
      * @return bool
      */
-    public function FileExists($arBucket, $filePath)
+    public function FileExists($bucket, $filePath)
     {
         try {
             if (empty($filePath)) {
@@ -285,10 +285,10 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
                 return false;
             }
 
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
             $exist = $s3->doesObjectExist(
-                $arBucket['BUCKET'],
+                $bucket['BUCKET'],
                 $key
             );
 
@@ -300,46 +300,46 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
-     * @param $arFile
+     * @param $bucket
+     * @param $file
      * @param $filePath
      * @return bool
      */
-    public function FileCopy($arBucket, $arFile, $filePath)
+    public function FileCopy($bucket, $file, $filePath)
     {
         return false;
     }
 
     /**
-     * @param $arBucket
-     * @param $arFile
+     * @param $bucket
+     * @param $file
      * @param $filePath
      * @return bool
      */
-    public function DownloadToFile($arBucket, $arFile, $filePath)
+    public function DownloadToFile($bucket, $file, $filePath)
     {
         $io = \CBXVirtualIo::GetInstance();
         $obRequest = new \CHTTP;
         $obRequest->follow_redirect = true;
-        return $obRequest->Download($this->GetFileSRC($arBucket, $arFile), $io->GetPhysicalName($filePath));
+        return $obRequest->Download($this->GetFileSRC($bucket, $file), $io->GetPhysicalName($filePath));
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @param $filePath
      * @return bool
      */
-    public function DeleteFile($arBucket, $filePath)
+    public function DeleteFile($bucket, $filePath)
     {
         try {
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
             $parsedKey = array_diff(explode('/', $filePath), ['']);
 
             // Удаление вместе с resize_cache
             $regex = "/(iblock\/{$parsedKey['2']})/";
-            $s3->deleteMatchingObjects($arBucket['BUCKET'], '', $regex);
+            $s3->deleteMatchingObjects($bucket['BUCKET'], '', $regex);
 
-            return $s3->doesObjectExist($arBucket['BUCKET'], $filePath);
+            return $s3->doesObjectExist($bucket['BUCKET'], $filePath);
 
         } catch (\Exception $e) {
             return false;
@@ -347,32 +347,32 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @param $filePath
-     * @param $arFile
+     * @param $file
      * @return bool
      */
-    public function SaveFile($arBucket, $filePath, $arFile)
+    public function SaveFile($bucket, $filePath, $file)
     {
         try {
             if (!empty(self::$fileKeyForUpload) &&
                 stripos($filePath, '/resize_cache/') === false) {
-                if (stripos($arFile['name'], self::$fileKeyForUpload) === false) {
+                if (stripos($file['name'], self::$fileKeyForUpload) === false) {
                     return false;
                 }
             }
 
-            if (!file_exists($arFile['tmp_name'])) {
+            if (!file_exists($file['tmp_name'])) {
                 return false;
             }
 
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
             $params = [
-                'Bucket' => $arBucket['BUCKET'],
+                'Bucket' => $bucket['BUCKET'],
                 'Key' => $this->getKey($filePath),
-                'Body' => fopen($arFile['tmp_name'], 'r'),
-                'ContentType' => $arFile['type']
+                'Body' => fopen($file['tmp_name'], 'r'),
+                'ContentType' => $file['type']
             ];
 
             $s3->putObject($params);
@@ -385,12 +385,12 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
+     * @param $bucket
      * @param $filePath
      * @param $bRecursive
      * @return array
      */
-    public function ListFiles($arBucket, $filePath, $bRecursive = false)
+    public function ListFiles($bucket, $filePath, $bRecursive = false)
     {
         try {
             $result = [
@@ -400,10 +400,10 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
                 "file_mtime" => [],
                 "file_hash" => [],
             ];
-            $s3 = $this->getS3Client($arBucket);
+            $s3 = $this->getS3Client($bucket);
 
             $iterator = $s3->getIterator('ListObjects', [
-                'Bucket' => $arBucket['BUCKET'],
+                'Bucket' => $bucket['BUCKET'],
             ]);
 
             foreach ($iterator as $object) {
@@ -424,14 +424,14 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
-     * @param $NS
+     * @param $bucket
+     * @param $ns
      * @param $filePath
      * @param $fileSize
-     * @param $ContentType
+     * @param $contentType
      * @return bool
      */
-    public function InitiateMultipartUpload($arBucket, &$NS, $filePath, $fileSize, $ContentType)
+    public function InitiateMultipartUpload($bucket, &$ns, $filePath, $fileSize, $contentType)
     {
         return false;
     }
@@ -445,45 +445,45 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
     }
 
     /**
-     * @param $arBucket
-     * @param $NS
+     * @param $bucket
+     * @param $ns
      * @param $data
      * @return bool
      */
-    public function UploadPart($arBucket, &$NS, $data)
+    public function UploadPart($bucket, &$ns, $data)
     {
         return false;
     }
 
     /**
-     * @param $arBucket
-     * @param $NS
+     * @param $bucket
+     * @param $ns
      * @return bool
      */
-    public function CompleteMultipartUpload($arBucket, &$NS)
+    public function CompleteMultipartUpload($bucket, &$ns)
     {
         return false;
     }
 
-    private function getS3Client(array $arBucket): S3Client
+    private function getS3Client(array $bucket): S3Client
     {
-        $this->checkConnection($arBucket);
+        $this->checkConnection($bucket);
 
-        if ($arBucket['ACTIVE'] != 'Y') {
+        if ($bucket['ACTIVE'] != 'Y') {
             throw new \Exception('Bucket disabled');
         }
 
         $s3 = new S3Client([
             'version' => 'latest',
-            'region' => $arBucket['LOCATION'],
-            'endpoint' => $arBucket['SETTINGS']['HOST'],
+            'region' => $bucket['LOCATION'],
+            'endpoint' => $bucket['SETTINGS']['HOST'],
             'use_path_style_endpoint' => true,
             'credentials' => [
-                'key' => $arBucket['SETTINGS']['ACCESS_KEY'],
-                'secret' => $arBucket['SETTINGS']['SECRET_KEY'],
+                'key' => $bucket['SETTINGS']['ACCESS_KEY'],
+                'secret' => $bucket['SETTINGS']['SECRET_KEY'],
             ],
             'http' => [
-                'connect_timeout' => $this->connect_timeout,
+                'connect_timeout' => $this->connectTimeout,
                 'timeout' => $this->timeout,
             ],
         ]);
@@ -507,16 +507,16 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
         return $key;
     }
 
-    private function checkConnection(array &$arBucket)
+    private function checkConnection(array &$bucket)
     {
         try {
             $client = new \GuzzleHttp\Client();
 
             $client->request(
                 'GET',
-                $arBucket["SETTINGS"]["HOST"],
+                $bucket["SETTINGS"]["HOST"],
                 [
-                    'connect_timeout' => $this->connect_timeout,
+                    'connect_timeout' => $this->connectTimeout,
                     'timeout' => $this->timeout
                 ]
             );
@@ -525,17 +525,17 @@ class CCloudStorageServiceMinio extends \CCloudStorageService
             $log->pushHandler(new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/upload/logs/minio_s3/' . date('Y-m') . '.log', Logger::ERROR));
             $log->error('ConnectException:  ' . $e->getMessage());
 
-            $this->disableCloud($arBucket);
+            $this->disableCloud($bucket);
         }
         catch (ClientException $e) {
             return;
         }
     }
 
-    private function disableCloud(&$arBucket)
+    private function disableCloud(&$bucket)
     {
-        $bucket = new \CCloudStorageBucket($arBucket['ID']);
+        $bucket = new \CCloudStorageBucket($bucket['ID']);
         $bucket->Update(['ACTIVE' => 'N']);
-        $arBucket['ACTIVE'] = 'N';
+        $bucket['ACTIVE'] = 'N';
     }
 }
