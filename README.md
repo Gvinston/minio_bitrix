@@ -25,7 +25,4 @@ composer require gvinston/minio_bitrix dev-master
 Если облако будет недоступно, то оно отключится автоматически, что позволит сайту работать и дальше.
 Логи о недоступности облака запишутся по пути от корня сайта: "/upload/logs/minio_s3/"
 
-<p>
-    <a href="https://www.instagram.com/igvinston/">inst. igvinston</a>
-</p>
  
